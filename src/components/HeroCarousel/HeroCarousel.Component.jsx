@@ -1,10 +1,20 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import HeroSlider from "react-slick";
 import { NextArrow, PrevArrow } from './Arrows.Components';
+import axios from 'axios';
 
 const HeroCarousel = () => {
 
  const [images, setImages] = useState([]);
+
+ useEffect(() => {
+  const requestNowPlayingMovies = async () => {
+      const getImages = await axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=4dece8d7dde9f9104b0079352edcd775");
+      setImages(getImages.data.results);
+  };
+
+  requestNowPlayingMovies();
+}, []);
  
  const settingsLG = {
   arrows: true,
