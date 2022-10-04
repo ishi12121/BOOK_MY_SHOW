@@ -1,8 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import DefaultLayoutHoc from "../layout/Default.layout";
 import EntertainmentCardSlider from "../components/Entertainment/EntertainmentCard.Component";
 import HeroCarousel from "../components/HeroCarousel/HeroCarousel.Component";
 import PosterSlider from "../components/PosterSlider/PosterSlider.Component";
+
+
+
+
 
 function HomePage() {
     const [recommendedMovies, setRecommendedMovies] = useState([]);
@@ -71,4 +76,4 @@ function HomePage() {
         </>
     );
 }
-export default HomePage;
+export default DefaultLayoutHoc(HomePage);
