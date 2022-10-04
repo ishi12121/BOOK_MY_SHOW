@@ -19,13 +19,29 @@ function HomePage() {
     useEffect(() => {
         const requestTopRatedMovies = async () => {
             const getTopRatedMovies = await axios.get("https://api.themoviedb.org/3/movie/top_rated?api_key=4dece8d7dde9f9104b0079352edcd775");
+            setRecommendedMovies(getTopRatedMovies.data.results);
+        };
+
+        requestTopRatedMovies();
+    }, []);
+
+    useEffect(() => {
+        const requestTopRatedMovies = async () => {
+            const getTopRatedMovies = await axios.get("/movie/top_rated");
             setPremierMovies(getTopRatedMovies.data.results);
         };
 
         requestTopRatedMovies();
     }, []);
 
- 
+    useEffect(() => {
+        const requestUpcomingMovies = async () => {
+            const getUpcomingMovies = await axios.get("/movie/upcoming");
+            setOnlineStreamEvents(getUpcomingMovies.data.results);
+        };
+
+        requestUpcomingMovies();
+    }, []);
 
     return (
         <>
