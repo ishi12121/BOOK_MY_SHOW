@@ -1,49 +1,50 @@
-import React, { useEffect, useState, useContext } from 'react';
-import MovieLayoutHoc from '../layout/Movie.layout';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { MovieContext } from '../context/Movie.context';
-import Slider from 'react-slick';
-import {FaCcVisa , FaCcApplePay } from 'react-icons/fa' 
+import React, { useContext, useEffect, useState } from "react";
+import Slider from "react-slick";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+
+//icons
+import { FaCcVisa, FaCcApplePay } from "react-icons/fa";
+
+//Components
+
 import PosterSlider from "../components/PosterSlider/PosterSlider.Component";
 
+//Context
+import { MovieContext } from "../context/Movie.context";
+
 const MoviePage = () => {
+    const { movie } = useContext(MovieContext);
+    const { id } = useParams();
+    const [cast, setCast] = useState([]);
+    const [similarMovies, setSimilarMovies] = useState([]);
+    const [recommended, setRecommended] = useState([]);
 
-  const { id } = useParams();
-  const {movie} = useContext(MovieContext);
-  const [cast, setCast] = useState();
-  const [getSimilarMovies, setSimilarMovies] = useState();
-  const [recommendedMovies, setRecommendedMovies] = useState();
+    useEffect(() => {
+        const requestCast = async () => {
+            const getCast = await axios.get(`/movie/${id}/credits`);
+            setCast(getCast.data.cast);
+        };
+        requestCast();
+    }, [id]);
 
-  useEffect(()  => {
-    const requestCast = async() => {
-       const getCast = await axios.get(`/movie/${id}/similar`);
-       setCast(getCast.data.cast);
-    };
+    useEffect(() => {
+        const requestSimilarMovies = async () => {
+            const getSimilarMovies = await axios.get(`/movie/${id}/similar`);
+            setSimilarMovies(getSimilarMovies.data.results);
+        };
+        requestSimilarMovies();
+    }, [id]);
 
-    requestCast();
-  }, [id]);
-
-  
-  useEffect(()  => {
-    const requestSimilarMovies = async() => {
-       const getSimilarMovies = await axios.get(`/movie/${id}/credits`);
-       setSimilarMovies(getSimilarMovies.data.results);
-    };
-
-    requestSimilarMovies();
-  }, [id]);
-
-
-  
-  useEffect(()  => {
-    const requestRecommendedMovies = async() => {
-       const getRecommendedMovies = await axios.get(`/movie/${id}/recommendations`);
-       setRecommendedMovies(getRecommendedMovies.data.results);
-    };
-
-    requestRecommendedMovies();
-  }, [id]);
+    useEffect(() => {
+        const requestRecommendedMovies = async () => {
+            const getRecommendedMovies = await axios.get(
+                `/movie/${id}/recommendations`
+            );
+            setRecommended(getRecommendedMovies.data.results);
+        };
+        requestRecommendedMovies();
+    }, [id]);
  
   const settingsCast = {};
 
@@ -124,7 +125,7 @@ const MoviePage = () => {
        <PosterSlider
            config={settings}
            title="Recommended Movies"
-           posters={recommendedMovies}
+           posters={similarMovies}
            isDark={false}
        />
    </div>
@@ -137,7 +138,7 @@ const MoviePage = () => {
    <PosterSlider
        config={settings}
        title="BMS XCLUSIVE"
-       posters={recommendedMovies}
+       posters={recommended}
        isDark={false}
    />
 </div>
@@ -148,4 +149,4 @@ const MoviePage = () => {
   
 };
 
-export default MovieLayoutHoc(MoviePage);
+export default (MoviePage);
