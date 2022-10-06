@@ -1,7 +1,7 @@
-import React, {useState, createContext} from 'react';
+import React, {useState} from 'react';
 
 
-export const MovieContext = createContext();
+export const MovieContext = React.createContext();
 
 
 const MovieProvider = ({ children }) => {

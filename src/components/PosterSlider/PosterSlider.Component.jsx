@@ -10,10 +10,17 @@ const PosterSlider = (props) => {
     speed: 500,
     slideToShow: 5,
     slideToScroll:4,
-    InitialSlide: 0,
     responsive: [ 
       {
-      breakpoint: 1024,
+        breakpoint: 1600,
+        settings: {
+            slidesToShow: 5,
+            slidesToScroll: 3,
+            infinite: true,
+        },
+    },
+      {
+      breakpoint: 1300,
       settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
@@ -61,13 +68,23 @@ const PosterSlider = (props) => {
     </div>
 
 
-    
-    <Slider {...Settings}>
+    {config && (
+    <Slider {...config}>
     {posters.map((each, index) => (
         <Poster {...each} isDark={isDark} key={index} />
     ))}
    
 </Slider>
+)}
+{!config && (
+  <Slider {...Settings}>
+  {posters.map((each, index) => (
+      <Poster {...each} isDark={isDark} key={index} />
+  ))}
+ 
+</Slider>
+)}
+
     </>
   );
 };
