@@ -1,25 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import PaymentModel from "../PaymentModal/Payment.Component";
+import { MovieContext } from "../../context/Movie.context";
 
 
 
 const MovieInfo = ({ movie }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [price, setPrice] = useState(0);
+    const {price,setIsOpen,isOpen,rentMovies,buyMovies} = useContext(MovieContext);
 
     const genres = movie.genres?.map(({ name }) => name).join(", ");
 
-    const rentMovies = () => {
-        setIsOpen(true);
-        setPrice(149);
-    };
-
-    const buyMovies = () => {
-        setIsOpen(true);
-        setPrice(599);
-    };
-
+  
     return (
         <>
+            
+           <PaymentModel setIsOpen={setIsOpen} isOpen={isOpen} price={price} />
             
             <div className="flex flex-col gap-8">
                 <h1 className="text-white text-5xl font-bold">
