@@ -42,6 +42,13 @@ const PosterSlider = (props) => {
           slidesToScroll: 1,
       },
   },
+  {
+    breakpoint: 200,
+    settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+    },
+},
 ]
   };
 
