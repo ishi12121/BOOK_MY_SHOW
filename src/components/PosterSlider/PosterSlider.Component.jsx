@@ -43,10 +43,10 @@ const PosterSlider = (props) => {
       },
   },
   {
-    breakpoint: 150,
+    breakpoint: 100,
     settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
+        slidesToShow: 2,
+        slidesToScroll: 2,
     },
 },
 ]
